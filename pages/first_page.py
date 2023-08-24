@@ -177,7 +177,7 @@ def extract_string(s):
     match = re.search(r'\"\"\"(.*?)\"\"\"', s, re.DOTALL)
     return match.group(1) if match else None
 
-st.title("BBYouTube Script, Title, and Description Generator")
+st.title("YouTube Script, Title, and Description Generator")
 
 # Callout text
 st.markdown('''
