@@ -127,24 +127,24 @@ def download_subtitles(video_id):
 def format_with_clarifai_api(raw_text, prompt):
 
     full_prompt = prompt + '\n' + raw_text + '\n'
-    # PAT = os.environ.get('CLARIFAI_PAT') 
+    PAT = os.environ.get('CLARIFAI_PAT') 
 
-    # if not PAT:  # If PAT is not set via environment variable
-    try:
-        PAT = st.secrets['CLARIFAI_PAT']
-    except KeyError:
-        st.error("Failed to retrieve the Clarifai Personal Access Token!")
-        PAT = None
+    if not PAT:  # If PAT is not set via environment variable
+      try:
+          PAT = st.secrets['CLARIFAI_PAT']
+      except KeyError:
+          st.error("Failed to retrieve the Clarifai Personal Access Token!")
+          PAT = None
 
     channel = ClarifaiChannel.get_grpc_channel()
     stub = service_pb2_grpc.V2Stub(channel)
 
     metadata = (('authorization', 'Key ' + PAT),)
 
-    # userDataObject = resources_pb2.UserAppIDSet(
-    #     user_id=selected_model['USER_ID'], 
-    #     app_id=selected_model['APP_ID']
-    # )
+    userDataObject = resources_pb2.UserAppIDSet(
+        user_id=selected_model['USER_ID'], 
+        app_id=selected_model['APP_ID']
+    )
 
     post_model_outputs_response = stub.PostModelOutputs(
         service_pb2.PostModelOutputsRequest(

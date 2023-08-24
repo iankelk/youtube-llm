@@ -1,2 +1,4 @@
 clarifai==9.6.0
 streamlit==1.23.1
+clarifai-grpc
+yt_dlp
